@@ -21,7 +21,7 @@ export default function StatsPanel({ earthquakes }: Props) {
 
   return (
     <div style={{
-      position: 'absolute', top: 72, left: 28,
+      position: 'absolute', top: 90, left: 28,
       display: 'flex', flexDirection: 'column', gap: 8,
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     }}>
