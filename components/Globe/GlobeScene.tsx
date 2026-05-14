@@ -19,7 +19,7 @@ export default function GlobeScene() {
   const days   = useGlobeStore(s => s.days)
   const { data, isLoading } = useEarthquakeData(days, minMag)
   const earthquakes = data?.features ?? []
-  const { controlsRef, flyTo } = useGlobeCamera()
+  const { controlsRef, flyTo, resetCamera  } = useGlobeCamera()
 
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
@@ -43,7 +43,7 @@ export default function GlobeScene() {
           autoRotateSpeed={0.4}
         />
       </Canvas>
-      <HUD earthquakes={earthquakes} isLoading={isLoading} />
+      <HUD earthquakes={earthquakes} isLoading={isLoading} onReset={resetCamera} />
       <StatsPanel earthquakes={earthquakes} />
       <FilterPanel />
     </div>

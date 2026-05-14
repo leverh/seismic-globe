@@ -6,11 +6,17 @@ import { EarthquakeFeature } from '@/types/earthquake'
 interface Props {
   earthquakes: EarthquakeFeature[]
   isLoading:   boolean
+  onReset:     () => void
 }
 
-export default function HUD({ earthquakes, isLoading }: Props) {
+export default function HUD({ earthquakes, isLoading, onReset  }: Props) {
   const selected = useGlobeStore(s => s.selected)
   const setSelected = useGlobeStore(s => s.setSelected)
+
+  const handleReset = () => {
+    setSelected(null)
+    onReset()
+  }
 
   const maxMag = earthquakes.length
     ? Math.max(...earthquakes.map(q => q.properties.mag)).toFixed(1)
@@ -34,14 +40,30 @@ export default function HUD({ earthquakes, isLoading }: Props) {
           SEISMIC <span style={{ color: '#4fa3e8' }}>GLOBE</span>
         </div>
 
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <Pill>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#e05555', display: 'inline-block', animation: 'blink 1.4s infinite' }} />
-            Live USGS
-          </Pill>
-          <Pill><strong style={{ color: '#e0f0ff' }}>{isLoading ? '…' : earthquakes.length}</strong>&nbsp;events</Pill>
-          <Pill>Max <strong style={{ color: '#e0f0ff' }}>M {maxMag}</strong></Pill>
-        </div>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+  <Pill>
+    <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#e05555', display: 'inline-block', animation: 'blink 1.4s infinite' }} />
+    Live USGS
+  </Pill>
+  <Pill><strong style={{ color: '#e0f0ff' }}>{isLoading ? '…' : earthquakes.length}</strong>&nbsp;events</Pill>
+  <Pill>Max <strong style={{ color: '#e0f0ff' }}>M {maxMag}</strong></Pill>
+
+  <button
+    onClick={handleReset}
+    style={{
+      pointerEvents: 'all',
+      background: 'rgba(15,30,55,0.75)',
+      border: '0.5px solid rgba(78,140,220,0.3)',
+      borderRadius: 20, padding: '6px 14px',
+      color: '#9dc8f0', fontSize: 12,
+      cursor: 'pointer', display: 'flex',
+      alignItems: 'center', gap: 6,
+    }}
+    title="Reset view"
+  >
+    ⟳ Reset
+  </button>
+</div>
       </div>
 
       {/* selected quake card */}

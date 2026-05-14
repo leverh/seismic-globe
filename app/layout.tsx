@@ -5,6 +5,9 @@ import Providers from './providers'
 export const metadata: Metadata = {
   title: 'Seismic Globe',
   description: 'Real-time 3D earthquake visualisation',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
