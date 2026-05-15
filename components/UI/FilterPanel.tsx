@@ -10,7 +10,7 @@ export default function FilterPanel() {
 
   return (
     <div style={{
-      position: 'absolute', bottom: 28, right: 28,
+      position: 'absolute', bottom: 38, right: 28,
       background: 'rgba(6,11,28,0.88)',
       border: '0.5px solid rgba(78,140,220,0.4)',
       borderRadius: 12, padding: '16px 20px',
