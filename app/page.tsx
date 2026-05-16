@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main style={{ width: '100vw', height: '100vh' }}>
+    <main style={{ width: '100vw', height: '100dvh' }}>
       <GlobeScene />
     </main>
   )

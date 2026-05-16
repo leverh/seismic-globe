@@ -3,22 +3,56 @@
 import { useGlobeStore } from '@/store/globeStore'
 
 export default function FilterPanel() {
-  const minMag  = useGlobeStore(s => s.minMag)
-  const days    = useGlobeStore(s => s.days)
+  const minMag    = useGlobeStore(s => s.minMag)
+  const days      = useGlobeStore(s => s.days)
   const setMinMag = useGlobeStore(s => s.setMinMag)
   const setDays   = useGlobeStore(s => s.setDays)
 
+  // Stop touch events from reaching the globe canvas beneath
+  const stopTouch = (e: React.TouchEvent) => e.stopPropagation()
+
   return (
-    <div style={{
-      position: 'absolute', bottom: 38, right: 28,
-      background: 'rgba(6,11,28,0.88)',
-      border: '0.5px solid rgba(78,140,220,0.4)',
-      borderRadius: 12, padding: '16px 20px',
-      minWidth: 200, zIndex: 10, pointerEvents: 'all',
-      backdropFilter: 'blur(8px)',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    }}>
-      <div style={{ fontSize: 11, color: '#4a7aaa', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>
+    <div
+      onTouchStart={stopTouch}
+      onTouchMove={stopTouch}
+      onTouchEnd={stopTouch}
+      style={{
+        position: 'absolute',
+
+        bottom: 'max(16px, calc(env(safe-area-inset-bottom, 0px) + 16px))',
+
+        left: 'clamp(16px, 5vw, 9999px)',
+        right: 'clamp(16px, 5vw, 9999px)',
+        maxWidth: 320,
+
+        marginLeft: 'auto',
+
+        maxHeight: '45dvh',
+        overflowY: 'auto',
+
+        touchAction: 'pan-y',
+        zIndex: 10,
+        pointerEvents: 'all',
+        background: 'rgba(6,11,28,0.88)',
+        border: '0.5px solid rgba(78,140,220,0.4)',
+        borderRadius: 12,
+        padding: '16px 20px',
+        backdropFilter: 'blur(8px)',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+
+        scrollbarWidth: 'none',
+      }}
+    >
+      {/* Hide webkit scrollbar */}
+      <style>{`div::-webkit-scrollbar { display: none; }`}</style>
+
+      <div style={{
+        fontSize: 11,
+        color: '#4a7aaa',
+        textTransform: 'uppercase',
+        letterSpacing: '0.1em',
+        marginBottom: 14,
+      }}>
         Filters
       </div>
 
@@ -44,7 +78,8 @@ export default function FilterPanel() {
             key={d}
             onClick={() => setDays(d)}
             style={{
-              fontSize: 11, padding: '4px 10px',
+              fontSize: 11,
+              padding: '4px 10px',
               borderRadius: 20,
               background: days === d ? 'rgba(78,140,220,0.25)' : 'transparent',
               border: `0.5px solid ${days === d ? 'rgba(78,140,220,0.7)' : 'rgba(78,140,220,0.25)'}`,
